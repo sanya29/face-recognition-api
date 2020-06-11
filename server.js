@@ -1,7 +1,10 @@
 const express = require("express");
+const bcrypt = require('bcrypt-nodejs');
+const cors = require('cors');
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 const database = {
     users: [
@@ -21,6 +24,13 @@ const database = {
             entries: 0,
             joined: new Date()
         }
+    ],
+    login: [
+        {
+            id: '987',
+            hash: '',
+            email: 'shaivis18@gmail.com'
+        }
     ]
 }
 
@@ -29,6 +39,12 @@ app.get('/', (req, res) => {
 })
 
 app.post('/signin', (req, res) => {
+    bcrypt.compare("apples", "$2a$10$Z4QZkW47Ccw9wqgxsJavm.2zVGkNrPnC34kahDjLP1uPMCThYFC4C", function(err, res) {
+        console.log("First guess", res);
+    });
+    bcrypt.compare("veggies", "$2a$10$Z4QZkW47Ccw9wqgxsJavm.2zVGkNrPnC34kahDjLP1uPMCThYFC4C", function(err, res) {
+        console.log("Second guess", res);
+    });
     if (req.body.email === database.users[0].email && req.body.password === database.users[0].password) {
         res.json('success is assured');
     }
@@ -39,7 +55,7 @@ app.post('/signin', (req, res) => {
 })
 
 app.post('/register', (req, res) => {
-    const { email, name, password} = req.body;
+    const { email, name, password } = req.body;
     database.users.push({
         id: '125',
         name: name,
@@ -79,6 +95,19 @@ app.put('/image', (req, res) => {
         res.status(400).json("not found");
     }
 })
+
+//////////////////////// BCRYPT ////////////////////////
+// bcrypt.hash("bacon", null, null, function(err, hash) {
+//     // Store hash in your password DB.
+// });
+
+// // Load hash from your password DB.
+// bcrypt.compare("bacon", hash, function(err, res) {
+//     // res == true
+// });
+// bcrypt.compare("veggies", hash, function(err, res) {
+//     // res = false
+// });
 
 app.listen(3000, () => {
     console.log('app is running on port 3000');

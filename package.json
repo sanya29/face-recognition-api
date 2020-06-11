@@ -12,6 +12,8 @@
     "nodemon": "^2.0.4"
   },
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "cors": "^2.8.5",
     "express": "^4.17.1"
   }
 }
