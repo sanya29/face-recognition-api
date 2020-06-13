@@ -22,7 +22,7 @@ app.use(express.json());
 app.use(cors());
 
 app.get('/', (req, res) => {
-    res.send(database.users); 
+    res.send("it's working!"); 
 })
 
 app.post('/signin', (req, res) => {
@@ -114,7 +114,7 @@ app.put('/image', (req, res) => {
 //     // res = false
 // });
 
-app.listen(3000, () => {
+app.listen(process.env.PORT || 3000, () => {
     console.log('app is running on port 3000');
 });
 
